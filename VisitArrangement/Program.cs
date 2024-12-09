@@ -24,6 +24,12 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
     options.LogTo(Console.WriteLine).EnableSensitiveDataLogging();
 });
 
+builder.Services.AddDbContext<VisitArrangementDbContext>(options =>
+{
+    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=VisitArrangement;Trusted_Connection=true;MultipleActiveResultSets=true;");
+    options.LogTo(Console.WriteLine).EnableSensitiveDataLogging();
+});
+
 
 builder.Services.AddAutoMapper(typeof(AutomapperConfig).Assembly);
 
