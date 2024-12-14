@@ -12,8 +12,8 @@ using VisitArrangement.Infrastructure.Context;
 namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 {
     [DbContext(typeof(VisitArrangementDbContext))]
-    [Migration("20241214120135_userTableProblem")]
-    partial class userTableProblem
+    [Migration("20241214155643_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,26 +57,6 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                     b.ToTable("Arrangement", (string)null);
                 });
 
-            modelBuilder.Entity("VisitArrangement.Domain.Entities.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("varchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Image", (string)null);
-                });
-
             modelBuilder.Entity("VisitArrangement.Domain.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -108,21 +88,17 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ImageFK")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
-
                     b.Property<int>("LocationFK")
                         .HasColumnType("int");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("varchar(500)");
 
-                    b.HasIndex("ImageId");
+                    b.HasKey("Id");
 
                     b.HasIndex("LocationId");
 
@@ -247,6 +223,9 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("varchar(450)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("varchar(450)");
 
@@ -308,19 +287,11 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 
             modelBuilder.Entity("VisitArrangement.Domain.Entities.LocationImage", b =>
                 {
-                    b.HasOne("VisitArrangement.Domain.Entities.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("VisitArrangement.Domain.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Image");
 
                     b.Navigation("Location");
                 });

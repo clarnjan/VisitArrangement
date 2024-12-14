@@ -12,20 +12,6 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Image",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Path = table.Column<string>(type: "varchar(500)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Image", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Location",
                 columns: table => new
                 {
@@ -40,7 +26,7 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -48,6 +34,7 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FirstName = table.Column<string>(type: "varchar(450)", nullable: true),
                     LastName = table.Column<string>(type: "varchar(450)", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "varchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(450)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(450)", nullable: true),
                     Email = table.Column<string>(type: "varchar(450)", nullable: true),
@@ -65,7 +52,7 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,19 +63,12 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LocationFK = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
-                    ImageFK = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: false),
+                    Path = table.Column<string>(type: "varchar(500)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LocationImage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LocationImage_Image_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LocationImage_Location_LocationId",
                         column: x => x.LocationId,
@@ -113,14 +93,14 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 {
                     table.PrimaryKey("PK_Arrangement", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Arrangement_User_HostFK",
+                        name: "FK_Arrangement_Users_HostFK",
                         column: x => x.HostFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Arrangement_User_VisitorFK",
+                        name: "FK_Arrangement_Users_VisitorFK",
                         column: x => x.VisitorFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -139,14 +119,14 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 {
                     table.PrimaryKey("PK_Message", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Message_User_SentFromFK",
+                        name: "FK_Message_Users_SentFromFK",
                         column: x => x.SentFromFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Message_User_SentToFK",
+                        name: "FK_Message_Users_SentToFK",
                         column: x => x.SentToFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -169,9 +149,9 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                         principalTable: "Location",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_UserLocation_User_UserFK",
+                        name: "FK_UserLocation_Users_UserFK",
                         column: x => x.UserFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -197,14 +177,14 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                         principalTable: "Arrangement",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Review_User_ByUserFK",
+                        name: "FK_Review_Users_ByUserFK",
                         column: x => x.ByUserFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Review_User_ForUserFK",
+                        name: "FK_Review_Users_ForUserFK",
                         column: x => x.ForUserFK,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -217,11 +197,6 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 name: "IX_Arrangement_VisitorFK",
                 table: "Arrangement",
                 column: "VisitorFK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LocationImage_ImageId",
-                table: "LocationImage",
-                column: "ImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LocationImage_LocationId",
@@ -280,16 +255,13 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 name: "UserLocation");
 
             migrationBuilder.DropTable(
-                name: "Image");
-
-            migrationBuilder.DropTable(
                 name: "Arrangement");
 
             migrationBuilder.DropTable(
                 name: "Location");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

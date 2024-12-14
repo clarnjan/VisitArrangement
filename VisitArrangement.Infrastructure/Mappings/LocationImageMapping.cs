@@ -10,6 +10,10 @@ public class LocationImageMapping : IEntityTypeConfiguration<LocationImage>
     {
         builder.HasKey(c => c.Id);
 
+        builder.Property(c => c.Path)
+            .IsRequired()
+            .HasColumnType("varchar(500)");
+
         builder.ToTable("LocationImage");
     }
 }

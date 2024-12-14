@@ -6,11 +6,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
+import { ProfilesListComponent } from './profiles-list/profiles-list.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    ProfilesListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

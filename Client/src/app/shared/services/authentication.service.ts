@@ -23,9 +23,10 @@ export class AuthenticationService {
   public loginUser = (route: string, body: UserForAuthenticationDto) => {
     return this.http.post<AuthResponseDto>(this.createCompleteRoute(route, environment.baseUrl), body);
   }
-
+  
   public logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
+    localStorage.clear();
     this.sendAuthStateChangeNotification(false);
   }
 

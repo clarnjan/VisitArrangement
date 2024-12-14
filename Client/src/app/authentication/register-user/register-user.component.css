@@ -1,5 +1,5 @@
 em{
-  color: #e71515;
+  color: red;
   font-weight: bold;
 }
 
@@ -9,6 +9,6 @@ em{
 
 .card{
   margin-top: 10px;
-  background-color: #fff;
-  box-shadow: 1px 1px 1px #cabcbc;
+  background-color: white;
+  box-shadow: 1px 1px 1px gainsboro;
 }

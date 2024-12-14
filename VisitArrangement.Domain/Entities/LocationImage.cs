@@ -6,7 +6,5 @@ public class LocationImage : BaseEntity
 
     public Location Location { get; set; }
 
-    public int ImageFK { get; set; }
-
-    public Image Image { get; set; }
+    public string Path { get; set; }
 }

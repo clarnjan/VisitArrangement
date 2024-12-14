@@ -17,6 +17,14 @@ export class NavComponent implements OnInit {
     .subscribe(res => {
       this.isUserAuthenticated = res;
     })
+    if (typeof window !== 'undefined') {
+      const userInfo = localStorage.getItem('current-user');
+      if (userInfo) {
+        const user = JSON.parse(userInfo).user;
+        console.log(user);
+        this.authService.sendAuthStateChangeNotification(true);
+      }
+    }
   }
 
   public logout = () => {

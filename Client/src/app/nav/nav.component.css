@@ -1,3 +1,4 @@
-.nav-link, .navbar-brand{
-  color: #009688 !important;
+a {
+  color: white;
+  font-weight: bold;
 }
