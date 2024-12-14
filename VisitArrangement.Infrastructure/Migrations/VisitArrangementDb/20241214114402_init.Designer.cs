@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VisitArrangement.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using VisitArrangement.Infrastructure.Context;
 namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 {
     [DbContext(typeof(VisitArrangementDbContext))]
-    partial class VisitArrangementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241214114402_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,7 +258,7 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("VisitArrangement.Domain.Entities.UserLocation", b =>
@@ -287,13 +290,13 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
             modelBuilder.Entity("VisitArrangement.Domain.Entities.Arrangement", b =>
                 {
                     b.HasOne("VisitArrangement.Domain.Entities.User", "Host")
-                        .WithMany()
+                        .WithMany("ArrangementsHosting")
                         .HasForeignKey("HostFK")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("VisitArrangement.Domain.Entities.User", "Visitor")
-                        .WithMany()
+                        .WithMany("ArrangementsVisiting")
                         .HasForeignKey("VisitorFK")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -385,6 +388,13 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                     b.Navigation("Location");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("VisitArrangement.Domain.Entities.User", b =>
+                {
+                    b.Navigation("ArrangementsHosting");
+
+                    b.Navigation("ArrangementsVisiting");
                 });
 #pragma warning restore 612, 618
         }

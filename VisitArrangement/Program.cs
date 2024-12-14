@@ -34,7 +34,7 @@ builder.Services.AddDbContext<VisitArrangementDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutomapperConfig).Assembly);
 
 builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<RepositoryContext>();
+    .AddEntityFrameworkStores<VisitArrangementDbContext>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>
