@@ -8,19 +8,23 @@ import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch } fro
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { ProfilesListComponent } from './profiles-list/profiles-list.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileCardComponent } from './profile-card/profile-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     ProfilesListComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideHttpClient(withFetch()),

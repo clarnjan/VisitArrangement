@@ -20,8 +20,6 @@ export class NavComponent implements OnInit {
     if (typeof window !== 'undefined') {
       const userInfo = localStorage.getItem('current-user');
       if (userInfo) {
-        const user = JSON.parse(userInfo).user;
-        console.log(user);
         this.authService.sendAuthStateChangeNotification(true);
       }
     }

@@ -1,9 +1,2 @@
-<div class="profile-card">
-    <img src="profile-picture.jpg" alt="User Profile Picture" class="profile-image">
-    <div class="profile-info">
-        <p class="profile-name">First Name: <span id="first-name">John</span></p>
-        <p class="profile-name">Last Name: <span id="last-name">Doe</span></p>
-        <p class="profile-email">Email: <span id="email">email</span></p>
-    </div>
-    <button class="edit-button">Edit</button>
-</div>
+<app-profile-card [user]="user" [canEdit]="true">
+</app-profile-card>

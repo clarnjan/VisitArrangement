@@ -1,0 +1,39 @@
+<div class="profile-card" *ngIf="user !== undefined && !isEditing">
+    <div>
+        <img [src]="user.profilePicture" alt="User Profile Picture" class="profile-image">
+    </div>
+    <div class="profile-info">
+        <p class="profile-name"><span id="first-name">{{user.firstName}}</span></p>
+        <p class="profile-name"><span id="last-name">{{user.lastName}}</span></p>
+        <p class="profile-email"><span id="email">{{user.email}}</span></p>
+    </div>
+    <button class="edit-button" *ngIf="canEdit" (click)="isEditing = true">Edit</button>
+</div>
+
+<div class="profile-card" *ngIf="user !== undefined && formGroup !== undefined && isEditing">
+    <form [formGroup]="formGroup" (ngSubmit)="save()">
+    <div class="image-container">
+        <input #file type="file" accept="image/*"
+            (change)="uploadFile(file.files)">
+        <img [src]="user.profilePicture" alt="User Profile Picture" class="profile-image profile-image-edit"
+            (click)="triggerFileInputClick(file)">
+        <div class="overlay">
+            <span>Upload</span>
+        </div>
+    </div>
+    <div class="profile-info">
+        <div>
+            First Name:
+            <br>
+            <input formControlName="firstName">
+        </div>
+        <div>
+            Last Name:
+            <br>
+            <input formControlName="lastName">
+        </div>
+        <p class="profile-email"><span id="email">{{user.email}}</span></p>
+    </div>
+    <button class="edit-button" type="submit" >Save</button>
+    </form>
+</div>

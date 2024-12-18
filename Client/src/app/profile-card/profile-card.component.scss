@@ -1,0 +1,107 @@
+.profile-card {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #28a745;
+}
+
+.profile-info {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-email {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.edit-button {
+    padding: 10px 25px;
+    background-color: #28a745;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-button:hover {
+    background-color: #28a745;
+    transform: scale(1.05);
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+
+    input {
+        cursor: pointer;
+        display: none;
+    }
+  
+    .profile-image {
+        display: block;
+        object-fit: cover;
+        transition: opacity 0.3s ease;
+    }
+}
+
+.image-container:hover .profile-image {
+    opacity: 0.6;
+}
+
+.image-container:hover .overlay {
+    opacity: 1;
+}
+
+.overlay {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+

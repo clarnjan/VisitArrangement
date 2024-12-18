@@ -30,6 +30,8 @@ namespace VisitArrangement.API.Controllers
                 return BadRequest();
 
             var user = _mapper.Map<User>(userForRegistration);
+            user.CreatedOn = DateTime.UtcNow;
+            user.ProfilePicture = "http://localhost:5296/StaticFiles/Images/default.png";
 
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
@@ -53,7 +55,7 @@ namespace VisitArrangement.API.Controllers
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, User = user });
+            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, UserId = user.Id });
         }
     }
 }

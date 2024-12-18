@@ -6,7 +6,13 @@ using VisitArrangement.Domain.Entities;
 public class VisitArrangementDbContext : DbContext
 {
     public VisitArrangementDbContext(DbContextOptions<VisitArrangementDbContext> options) : base(options) { }
+    public DbSet<Arrangement> Arrangements { get; set; }
+    public DbSet<Location> Locations { get; set; }
+    public DbSet<LocationImage> LocationImages { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Review> Reviews { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserLocation> UserLocations { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
