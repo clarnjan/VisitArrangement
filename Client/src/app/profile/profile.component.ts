@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserProfile } from '../Interfaces/User/UserProfile';
 import { ProfilesApiService } from '../shared/services/profiles.api.service';
+import { FileService } from '../shared/services/file.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +11,11 @@ import { ProfilesApiService } from '../shared/services/profiles.api.service';
 })
 export class ProfileComponent implements OnInit {
   public user: UserProfile | undefined;
-  constructor(private profilesApiService: ProfilesApiService) {}
+  public isEditing = false;
+
+  constructor(
+    private fileService: FileService,
+    private profilesApiService: ProfilesApiService) { }
 
   ngOnInit(): void {
     if (typeof window === 'undefined'){
@@ -25,5 +31,31 @@ export class ProfileComponent implements OnInit {
       .subscribe((result) => {
         this.user = result;
       });
+    }
+
+    public uploadFile(files: any) {
+    
+        const fileToUpload =  files[0] as File;
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+    
+        this.fileService.upload(formData)
+        .subscribe((event) => {
+           console.log(fileToUpload);
+           if (event.type === HttpEventType.Response) {
+            this.user!.profilePicture = `http://localhost:5296/StaticFiles/Images/${fileToUpload.name}`;
+           }
+          }
+        );
+    }
+
+    public save(user: UserProfile) {
+      this.user!.firstName = user.firstName;
+      this.user!.lastName = user.lastName;
+  
+      this.profilesApiService.updateUserProfile(this.user!)
+        .subscribe(() => {
+          this.isEditing = false;
+        });
     }
 }
