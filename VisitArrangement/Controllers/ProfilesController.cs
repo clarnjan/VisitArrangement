@@ -1,46 +1,36 @@
 ﻿namespace VisitArrangement.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using VisitArrangement.API.Model.DTO;
-using VisitArrangement.Domain.Entities;
-using VisitArrangement.Infrastructure.Context;
+using VisitArrangement.Domain.Interfaces;
+using VisitArrangement.Domain.Model.DTO;
+using VisitArrangement.Infrastructure.Entities;
 
 [Route("api/[controller]")]
 [ApiController]
 public class ProfilesController : ControllerBase
 {
-    private VisitArrangementDbContext _context;
+    private IProfileService ProfileService;
 
-    public ProfilesController(VisitArrangementDbContext context)
+    public ProfilesController(IProfileService profileService)
     {
-        _context = context;
+        ProfileService = profileService;
     }
 
     [HttpGet()]
     public async Task<List<User>> GetUserProfiles()
     {
-        List<User> users = await _context.Users.ToListAsync();
-
-        return users;
+        return await ProfileService.GetUserProfilesAsync();
     }
 
     [HttpGet("{userId:int}")]
     public async Task<User> GetUserProfile([FromRoute]int userId)
     {
-        User user = await _context.Users.Where(x => x.Id == userId).FirstAsync();
-
-        return user;
+        return await ProfileService.GetUserProfileAsync(userId);
     }
 
     [HttpPut("{userId:int}")]
     public async Task<IActionResult> UpdateUserProfile([FromRoute] int userId, [FromBody] UserProfileDto userProfileDto)
     {
-        User user = await _context.Users.Where(x => x.Id == userId).FirstAsync();
-        user.FirstName = userProfileDto.FirstName;
-        user.LastName = userProfileDto.LastName;
-        user.ProfilePicture = userProfileDto.profilePicture;
-        await _context.SaveChangesAsync();
+        await ProfileService.UpdateUserProfileAsync(userId, userProfileDto);
 
         return Ok();
     }

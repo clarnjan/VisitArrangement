@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Infrastructure.Entities;
 
 public class UserLocationMapping : IEntityTypeConfiguration<UserLocation>
 {

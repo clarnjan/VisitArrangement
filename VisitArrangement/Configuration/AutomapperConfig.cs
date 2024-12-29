@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using VisitArrangement.API.Model.DTO;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Infrastructure.Entities;
+using VisitArrangement.Domain.Model.DTO;
 
-namespace VisitArrangement.API.Configuration
+namespace VisitArrangement.API.Configuration;
+
+public class AutomapperConfig : Profile
 {
-    public class AutomapperConfig : Profile
+    public AutomapperConfig()
     {
-        public AutomapperConfig()
-        {
-            CreateMap<UserForRegistrationDto, User>()
-                .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
-        }
+        CreateMap<UserForRegistrationDto, User>()
+            .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
     }
 }

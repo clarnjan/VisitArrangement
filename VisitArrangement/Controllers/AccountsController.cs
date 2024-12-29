@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using VisitArrangement.API.JwtFeatures;
-using VisitArrangement.API.Model.DTO;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Domain.Model.DTO;
+using VisitArrangement.Infrastructure.Entities;
 
 namespace VisitArrangement.API.Controllers
 {

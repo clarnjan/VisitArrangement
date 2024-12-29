@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Infrastructure.Entities;
 
 namespace VisitArrangement.Infrastructure.Context
 {

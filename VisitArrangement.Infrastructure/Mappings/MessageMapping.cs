@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Infrastructure.Entities;
 
 public class MessageMapping : IEntityTypeConfiguration<Message>
 {

@@ -1,4 +1,4 @@
-﻿namespace VisitArrangement.API.Model.DTO;
+﻿namespace VisitArrangement.Domain.Model.DTO;
 
 public class UserProfileDto
 {

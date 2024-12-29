@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Text;
 using VisitArrangement.API.Configuration;
 using VisitArrangement.API.JwtFeatures;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Domain.Interfaces;
+using VisitArrangement.Domain.Services;
+using VisitArrangement.Infrastructure.Entities;
 using VisitArrangement.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +59,7 @@ builder.Services.AddAuthentication(opt =>
 });
 
 builder.Services.AddScoped<JwtHandler>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 var app = builder.Build();
 

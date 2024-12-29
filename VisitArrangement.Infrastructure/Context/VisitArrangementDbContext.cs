@@ -1,7 +1,7 @@
 ﻿namespace VisitArrangement.Infrastructure.Context;
 
 using Microsoft.EntityFrameworkCore;
-using VisitArrangement.Domain.Entities;
+using VisitArrangement.Infrastructure.Entities;
 
 public class VisitArrangementDbContext : DbContext
 {

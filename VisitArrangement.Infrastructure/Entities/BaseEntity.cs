@@ -1,4 +1,4 @@
-﻿namespace VisitArrangement.Domain.Entities;
+﻿namespace VisitArrangement.Infrastructure.Entities;
 
 using System;
 
