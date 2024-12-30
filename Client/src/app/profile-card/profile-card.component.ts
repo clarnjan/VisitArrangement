@@ -66,6 +66,7 @@ export class ProfileCardComponent implements OnChanges {
       const files = Array.from(input.files);
       const images = files.map((file) => URL.createObjectURL(file));
       this.user?.locations[index].images.push(...images);
+      this.fileUploadStarted.emit(files);
     }
   }
 }

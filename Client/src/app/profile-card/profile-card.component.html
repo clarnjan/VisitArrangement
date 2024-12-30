@@ -55,7 +55,7 @@
             </div>
             </div>
             <input formControlName="locationName" placeholder="Location Name" />
-            <button class="add-location" type="button" (click)="addLocation()" [disabled]="this.formGroup === undefined || this.formGroup.get('locationName')?.value?.trim() === ''">Add New Location</button>
+            <button class="add-location" type="button" (click)="addLocation()" [disabled]="this.formGroup === undefined || this.formGroup.get('locationName')?.value?.trim() === ''">Add</button>
         </div>
         <button class="edit-button" type="submit" >Save</button>
     </form>
