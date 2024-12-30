@@ -1,0 +1,69 @@
+.location-card {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+
+  .location-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .carousel-images {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      position: relative;
+      justify-content: center;
+
+      .carousel-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 5px;
+        border-radius: 8px;
+        object-fit: cover;
+        opacity: 0.6;
+
+        &.active {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border-radius: 50%;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      &.left {
+        left: -20px;
+      }
+
+      &.right {
+        right: -20px;
+      }
+    }
+  }
+}

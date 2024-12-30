@@ -16,13 +16,13 @@ public class ProfilesController : ControllerBase
     }
 
     [HttpGet()]
-    public async Task<List<User>> GetUserProfiles()
+    public async Task<List<UserProfileDto>> GetUserProfiles()
     {
         return await ProfileService.GetUserProfilesAsync();
     }
 
     [HttpGet("{userId:int}")]
-    public async Task<User> GetUserProfile([FromRoute]int userId)
+    public async Task<UserProfileDto> GetUserProfile([FromRoute]int userId)
     {
         return await ProfileService.GetUserProfileAsync(userId);
     }

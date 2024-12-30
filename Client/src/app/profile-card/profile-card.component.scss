@@ -105,3 +105,94 @@
     pointer-events: none;
 }
 
+.locations-section {
+    margin-top: 20px;
+
+    h3 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .location-item {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+
+        .location-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            input {
+                flex-grow: 1;
+                margin-right: 10px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .remove-location {
+                background-color: #ff4d4f;
+                color: white;
+                border: none;
+                padding: 8px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+
+                &:hover {
+                background-color: #d9363e;
+                }
+            }
+        }
+
+        .image-upload {
+            .upload-label {
+                display: block;
+                margin-bottom: 5px;
+                cursor: pointer;
+                color: #007bff;
+                text-decoration: underline;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            .uploaded-images {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                img {
+                width: 60px;
+                height: 60px;
+                border-radius: 4px;
+                object-fit: cover;
+                }
+            }
+        }
+    }
+
+    .add-location {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+        background-color: #218838;
+        }
+    }
+}
+  
+button:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+  

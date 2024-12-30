@@ -1,0 +1,15 @@
+<div class="location-card">
+    <h3 class="location-name">{{locationName}}</h3>
+    <div class="carousel">
+      <button *ngIf="locationImages.length > 3" class="carousel-btn left" (click)="shiftRight()">&lt;</button>
+      <div class="carousel-images">
+        <img *ngFor="let image of locationImages; let i = index" 
+             [src]="image" 
+             alt="Location Image" 
+             class="carousel-image" 
+             [class.active]="i === currentSlide">
+      </div>
+      <button *ngIf="locationImages.length > 3" class="carousel-btn right" (click)="shiftLeft()">&gt;</button>
+    </div>
+  </div>
+  

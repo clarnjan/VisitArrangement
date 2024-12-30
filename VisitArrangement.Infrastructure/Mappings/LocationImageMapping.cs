@@ -14,6 +14,11 @@ public class LocationImageMapping : IEntityTypeConfiguration<LocationImage>
             .IsRequired()
             .HasColumnType("varchar(500)");
 
+        builder.HasOne(c => c.Location)
+            .WithMany(x => x.Images)
+            .HasForeignKey(b => b.LocationFK)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.ToTable("LocationImage");
     }
 }

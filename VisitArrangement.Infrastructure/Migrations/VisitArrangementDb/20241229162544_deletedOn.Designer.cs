@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VisitArrangement.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using VisitArrangement.Infrastructure.Context;
 namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 {
     [DbContext(typeof(VisitArrangementDbContext))]
-    partial class VisitArrangementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241229162544_deletedOn")]
+    partial class deletedOn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,13 +100,16 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                     b.Property<int>("LocationFK")
                         .HasColumnType("int");
 
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("varchar(500)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocationFK");
+                    b.HasIndex("LocationId");
 
                     b.ToTable("LocationImage", (string)null);
                 });
@@ -312,8 +318,8 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                 {
                     b.HasOne("VisitArrangement.Infrastructure.Entities.Location", "Location")
                         .WithMany("Images")
-                        .HasForeignKey("LocationFK")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Location");

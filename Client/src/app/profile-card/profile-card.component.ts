@@ -21,7 +21,8 @@ export class ProfileCardComponent implements OnChanges {
   ngOnChanges(): void {
     this.formGroup = new FormGroup({
       firstName: new FormControl(this.user !== undefined ? this.user!.firstName : '' , [Validators.required]),
-      lastName: new FormControl(this.user !== undefined ? this.user!.lastName : '', [Validators.required])
+      lastName: new FormControl(this.user !== undefined ? this.user!.lastName : '', [Validators.required]),
+      locationName: new FormControl('')
     });
   } 
   
@@ -46,5 +47,25 @@ export class ProfileCardComponent implements OnChanges {
     this.user!.firstName = this.formGroup!.get('firstName')?.value;
     this.user!.lastName = this.formGroup!.get('lastName')?.value;
     this.saveUpload.emit(this.user);
+  }
+
+  public addLocation() {
+    const newLocationName = this.formGroup!.get('locationName')?.value?.trim();
+    this.user!.locations.push({ name: newLocationName, images: [] });
+    this.formGroup!.get('locationName')?.setValue('');
+  }
+
+  public removeLocation(index: number) {
+    this.user!.locations.splice(index, 1);
+  }
+
+  // Upload images for a specific location
+  public uploadImages(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const files = Array.from(input.files);
+      const images = files.map((file) => URL.createObjectURL(file));
+      this.user?.locations[index].images.push(...images);
+    }
   }
 }

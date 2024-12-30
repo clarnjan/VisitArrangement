@@ -8,10 +8,14 @@ namespace VisitArrangement.Infrastructure.Entities
 
         public DateTime CreatedOn { get; set; }
 
+        public DateTime? DeletedOn { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
         public string ProfilePicture {  get; set; }
+
+        public virtual ICollection<UserLocation> UserLocations { get; set; }
     }
 }

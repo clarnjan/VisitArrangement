@@ -10,6 +10,9 @@ import { ProfilesListComponent } from './profiles-list/profiles-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LocationComponent } from './location/location.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -17,14 +20,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     NavComponent,
     ProfilesListComponent,
     ProfileComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     provideHttpClient(withFetch()),
