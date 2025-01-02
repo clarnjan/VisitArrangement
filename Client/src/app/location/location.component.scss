@@ -1,7 +1,6 @@
 .location-card {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 400px;
+  margin-bottom: 20px auto;
   text-align: center;
 
   .location-name {
@@ -23,7 +22,6 @@
       max-width: 400px;
       margin: 0 auto;
       position: relative;
-      justify-content: center;
 
       .carousel-image {
         width: 100px;

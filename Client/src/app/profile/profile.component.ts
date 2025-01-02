@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
       });
     }
 
-    public uploadFile(files: any) {
+    public uploadProfilePicture(files: any) {
     
         const fileToUpload =  files[0] as File;
         const formData = new FormData();

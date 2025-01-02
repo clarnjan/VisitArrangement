@@ -14,9 +14,12 @@ export class ProfileCardComponent implements OnChanges {
   @Input() public canEdit = false;
   @Input() public isEditing = false;
   public formGroup: FormGroup | undefined;
-  @Output() public fileUploadStarted = new EventEmitter();
+  @Output() public profilePictureUploaded = new EventEmitter();
   @Output() public saveUpload = new EventEmitter();
   @Output() public isEditingChange = new EventEmitter<boolean>();
+
+  constructor(
+    private fileService: FileService) { }
   
   ngOnChanges(): void {
     this.formGroup = new FormGroup({
@@ -40,7 +43,7 @@ export class ProfileCardComponent implements OnChanges {
       return;
     }
 
-    this.fileUploadStarted.emit(files);
+    this.profilePictureUploaded.emit(files);
   }
   
   public save() {
@@ -59,14 +62,21 @@ export class ProfileCardComponent implements OnChanges {
     this.user!.locations.splice(index, 1);
   }
 
-  // Upload images for a specific location
   public uploadImages(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const files = Array.from(input.files);
-      const images = files.map((file) => URL.createObjectURL(file));
+      const images = files.map((file) => `http://localhost:5296/StaticFiles/Images/${file.name}`);
       this.user?.locations[index].images.push(...images);
-      this.fileUploadStarted.emit(files);
+      
+      files.forEach(file => {
+        const fileToUpload =  file as File;
+        const formData = new FormData();
+        formData.append('file', fileToUpload, file.name);
+    
+        this.fileService.upload(formData)
+          .subscribe();
+      });
     }
   }
 }

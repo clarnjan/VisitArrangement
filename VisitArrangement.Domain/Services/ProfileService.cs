@@ -22,6 +22,21 @@ public class ProfileService : IProfileService
             .Select(x=> new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, new List<LocationDto>()))
             .ToListAsync();
 
+        var userIds = users.Select(x => x.Id).ToHashSet();
+
+        Dictionary<int, IEnumerable<LocationDto>> res = (await _context.UserLocations
+            .Include(x => x.Location)
+            .ThenInclude(x => x.Images)
+            .Where(x => userIds.Contains(x.UserFK) && x.DeletedOn == null)
+            .ToListAsync())
+            .GroupBy(x => x.UserFK)
+            .ToDictionary(x => x.Key, v => v.Select(x => new LocationDto(x.LocationFK, x.Location.Name, x.Location.Images.Select(y => y.Path).ToList())));
+
+        foreach (UserProfileDto user in users.Where(x => res.ContainsKey(x.Id)))
+        {
+            user.Locations = res[user.Id].Take(2).ToList();
+        }
+
         return users;
     }
 

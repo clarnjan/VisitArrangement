@@ -1,5 +1,5 @@
 .profile-card {
-    max-width: 400px;
+    max-width: 500px;
     margin: 20px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -8,6 +8,7 @@
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
 }
 
 .profile-card:hover {
@@ -27,6 +28,7 @@
     color: #555;
     font-size: 14px;
     line-height: 1.6;
+    width: 25%;
 }
 
 .profile-name {
@@ -201,3 +203,10 @@ button:disabled {
     opacity: 0.6;
 }
   
+.locations {
+    width: 75%;
+    padding: 20px;
+    h4 {
+        margin: 15%;
+    }
+}
