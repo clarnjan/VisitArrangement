@@ -34,7 +34,7 @@ public class ProfileService : IProfileService
 
         foreach (UserProfileDto user in users.Where(x => res.ContainsKey(x.Id)))
         {
-            user.Locations = res[user.Id].Take(2).ToList();
+            user.Locations = res[user.Id].ToList();
         }
 
         return users;

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   public isUserAuthenticated: boolean = false;
+  public userId: number | undefined;
 
   constructor(private authService: AuthenticationService, private router: Router) {}
 
@@ -20,6 +21,7 @@ export class NavComponent implements OnInit {
     if (typeof window !== 'undefined') {
       const userInfo = localStorage.getItem('current-user');
       if (userInfo) {
+        this.userId = JSON.parse(userInfo).userId;
         this.authService.sendAuthStateChangeNotification(true);
       }
     }

@@ -13,7 +13,7 @@ const routes: Routes = [
       component: ProfilesListComponent
     },
     {
-      path: 'profile',
+      path: 'profiles/:userId',
       component: ProfileComponent
     },
 ];

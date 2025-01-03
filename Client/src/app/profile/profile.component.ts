@@ -3,6 +3,7 @@ import { UserProfile } from '../Interfaces/User/UserProfile';
 import { ProfilesApiService } from '../shared/services/profiles.api.service';
 import { FileService } from '../shared/services/file.service';
 import { HttpEventType } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,11 +12,13 @@ import { HttpEventType } from '@angular/common/http';
 })
 export class ProfileComponent implements OnInit {
   public user: UserProfile | undefined;
+  public isCurrentUser = false;
   public isEditing = false;
 
   constructor(
     private fileService: FileService,
-    private profilesApiService: ProfilesApiService) { }
+    private profilesApiService: ProfilesApiService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     if (typeof window === 'undefined'){
@@ -25,12 +28,18 @@ export class ProfileComponent implements OnInit {
     if (!tokenInfo) {
       return;
     }
-    
-    const userId = JSON.parse(tokenInfo).userId;
-    this.profilesApiService.getUserProfile(userId)
-      .subscribe((result) => {
-        this.user = result;
-      });
+  	this.route.paramMap
+  		.subscribe({
+  			next: params => {
+  				const userId = Number(params.get('userId'));
+          this.isCurrentUser = JSON.parse(tokenInfo).userId === userId;
+          console.log(this.isCurrentUser);
+          this.profilesApiService.getUserProfile(userId)
+            .subscribe((result) => {
+              this.user = result;
+            });
+  			},
+  		});
     }
 
     public uploadProfilePicture(files: any) {

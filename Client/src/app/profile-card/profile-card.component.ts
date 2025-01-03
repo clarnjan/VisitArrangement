@@ -12,6 +12,7 @@ import { FileService } from '../shared/services/file.service';
 export class ProfileCardComponent implements OnChanges {
   @Input() public user: UserProfile | undefined;
   @Input() public canEdit = false;
+  @Input() public canMessage = false;
   @Input() public isEditing = false;
   public formGroup: FormGroup | undefined;
   @Output() public profilePictureUploaded = new EventEmitter();
@@ -34,8 +35,12 @@ export class ProfileCardComponent implements OnChanges {
   }
 
   public edit() {
-    this.isEditing = true; // Update local state
-    this.isEditingChange.emit(this.isEditing); // Emit the updated value
+    this.isEditing = true;
+    this.isEditingChange.emit(this.isEditing);
+  }
+
+  public message() {
+    console.log('message');
   }
 
   public uploadFile = (files: any) => {

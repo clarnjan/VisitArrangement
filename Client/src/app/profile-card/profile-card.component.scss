@@ -8,7 +8,13 @@
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card-view {
     display: flex;
+    .profile-info {        
+        width: 25%;
+    }
 }
 
 .profile-card:hover {
@@ -28,7 +34,6 @@
     color: #555;
     font-size: 14px;
     line-height: 1.6;
-    width: 25%;
 }
 
 .profile-name {
