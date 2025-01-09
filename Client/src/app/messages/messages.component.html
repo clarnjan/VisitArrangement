@@ -1,0 +1,17 @@
+<div class="messages-page">
+    <h1 class="page-title">Messages</h1>
+  
+    <div *ngIf="messages.length === 0" class="no-messages">
+      <p>No messages found. Start a conversation now!</p>
+      <button class="redirect-btn" (click)="redirectToHome()">Go to Home</button>
+    </div>
+  
+    <div *ngIf="messages.length > 0" class="messages-list">
+      <!-- Display messages -->
+      <!-- <div *ngFor="let message of messages" class="message-item">
+        <p class="message-text">{{ message.text }}</p>
+        <span class="message-meta">{{ message.timestamp | date }}</span>
+      </div> -->
+    </div>
+  </div>
+  

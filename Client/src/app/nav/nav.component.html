@@ -5,7 +5,8 @@
     <a class="nav-link" [routerLink]="['/home']" >Home</a>
   </ul>
   <ul class="nav navbar-nav navbar-right">
-    <a class="nav-link" [routerLink]="['/profiles', userId]" *ngIf="isUserAuthenticated">My profile</a>
+    <a class="nav-link" [routerLink]="['/messages', userId]" *ngIf="isUserAuthenticated">Messages</a>
+    <a class="nav-link" [routerLink]="['/profiles', userId]" *ngIf="isUserAuthenticated">Profile</a>
     <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active" *ngIf="!isUserAuthenticated">Register</a>
     <a class="nav-link" [routerLink]="['/authentication/login']" *ngIf="!isUserAuthenticated">Login</a>
     <a class="nav-link navbar-right" [routerLink]="['/login']" *ngIf="isUserAuthenticated" (click)="logout()">Log out</a>

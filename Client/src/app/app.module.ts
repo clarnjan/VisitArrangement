@@ -12,6 +12,7 @@ import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LocationComponent } from './location/location.component';
 import { FormsModule } from '@angular/forms';
+import { MessagesComponent } from './messages/messages.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     ProfilesListComponent,
     ProfileComponent,
     ProfileCardComponent,
-    LocationComponent
+    LocationComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

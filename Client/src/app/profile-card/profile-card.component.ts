@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { UserProfile } from '../Interfaces/User/UserProfile';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileService } from '../shared/services/file.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-card',
@@ -20,7 +21,8 @@ export class ProfileCardComponent implements OnChanges {
   @Output() public isEditingChange = new EventEmitter<boolean>();
 
   constructor(
-    private fileService: FileService) { }
+    private fileService: FileService,
+    private router: Router) { }
   
   ngOnChanges(): void {
     this.formGroup = new FormGroup({
@@ -39,8 +41,8 @@ export class ProfileCardComponent implements OnChanges {
     this.isEditingChange.emit(this.isEditing);
   }
 
-  public message() {
-    console.log('message');
+  public message(userId: number) {
+    this.router.navigate(['/messages', userId]);
   }
 
   public uploadFile = (files: any) => {

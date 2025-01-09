@@ -60,6 +60,7 @@ builder.Services.AddAuthentication(opt =>
 
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IMessagesService, MessagesService>();
 
 var app = builder.Build();
 

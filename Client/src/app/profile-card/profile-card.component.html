@@ -7,7 +7,7 @@
         <p class="profile-name"><span id="last-name">{{user.lastName}}</span></p>
         <p class="profile-email"><span id="email">{{user.email}}</span></p>
         <button class="edit-button" *ngIf="canEdit" (click)="edit()">Edit</button>
-        <button class="edit-button" *ngIf="canMessage" (click)="message()">Message</button>
+        <button class="edit-button" *ngIf="canMessage" (click)="message(user.id)">Message</button>
     </div>
     <div class="locations">
         <h4 class="no-locations" *ngIf="user.locations.length === 0">
