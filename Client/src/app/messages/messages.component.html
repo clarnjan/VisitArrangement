@@ -1,17 +1,42 @@
 <div class="messages-page">
-    <h1 class="page-title">Messages</h1>
-  
-    <div *ngIf="messages.length === 0" class="no-messages">
-      <p>No messages found. Start a conversation now!</p>
-      <button class="redirect-btn" (click)="redirectToHome()">Go to Home</button>
+  <!-- Left panel: All messages -->
+  <div class="messages-sidebar">
+    <div *ngFor="let message of messageInfos" class="message-item" (click)="selectUser(message.userId)">
+      <img [src]="message?.userProfilePicture" alt="User Profile Picture" class="profile-image" />
+      <div class="user-info">
+        <p class="profile-name">{{ message?.userFirstName }} {{ message?.userLastName }}</p>
+      </div>
+      <p class="message-text">{{ message.messageText }}</p>
     </div>
-  
-    <div *ngIf="messages.length > 0" class="messages-list">
-      <!-- Display messages -->
-      <!-- <div *ngFor="let message of messages" class="message-item">
-        <p class="message-text">{{ message.text }}</p>
-        <span class="message-meta">{{ message.timestamp | date }}</span>
-      </div> -->
+  </div>
+
+  <!-- Right panel: Chat with selected user -->
+  <div class="messages-chat">
+    <div *ngIf="userMessages" class="messages-chat-wrapper">
+      <div class="chat-header">
+        <img [src]="userMessages.profilePicture" alt="User Profile Picture" class="profile-image" />
+        <div class="user-info">
+          <p class="profile-name">{{ userMessages.firstName }} {{ userMessages.lastName }}</p>
+        </div>
+      </div>
+      <div class="chat">
+        <!-- Chat Messages -->
+        <div class="chat-messages">
+          <div *ngFor="let message of userMessages.messages" 
+               class="chat-message" 
+               [ngClass]="{'sent': message.isSentByCurrentUser, 'received': !message.isSentByCurrentUser}">
+               <span class="message-time">{{ message.sentOn | date: 'short' }}</span>
+            <span class="message-text">{{ message.messageText }}</span>
+          </div>
+        </div>     
+    
+        <!-- Message Input -->
+        <div class="chat-input">
+          <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." />
+          <button class="send-btn" (click)="sendMessage()">Send</button>
+        </div>
+      </div>
     </div>
   </div>
   
+</div>

@@ -1,62 +1,142 @@
 .messages-page {
-    max-width: 800px;
-    margin: 20px auto;
-    text-align: center;
-  
-    .page-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-  
-    .no-messages {
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 12px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  
-      p {
-        font-size: 18px;
-        color: #666;
-        margin-bottom: 15px;
+  display: flex;
+  height: 86vh; /* Full viewport height */
+  margin: 20px; /* Remove default margins */
+  overflow: hidden; /* Prevent overflow issues */
+
+  .messages-sidebar {
+    width: 20%;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+
+    .message-item {
+      border-top: 1px solid black;
+      padding-top: 5px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #e6e6e6;
       }
-  
-      .redirect-btn {
-        padding: 10px 20px;
-        margin-left: 5px;
-        background-color: #28a745;
-        color: #ffffff;
+
+      .message-text {
         font-size: 14px;
-        font-weight: bold;
-        border: none;
-        border-radius: 20px !important;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+        color: #333;
       }
     }
-  
-    .messages-list {
+  }
+
+  .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+
+  .messages-chat {
+    width: 80%;
+
+    .messages-chat-wrapper {
+      height: 86vh;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-  
-      .message-item {
-        padding: 15px;
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
+      justify-content: space-between;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #eaf7e1;
+      border-bottom: 1px solid #ddd;
+
+      .profile-name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+
+    .chat-messages {
+      flex: 1; /* Fills available vertical space */
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      overflow-y: auto; /* Enable scrolling */
+      background-color: #ffffff;
+    }
+
+    .chat-message {
+      max-width: 60%; /* Limit message width */
+      border-radius: 8px;
+      font-size: 14px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .chat-message.sent {
+      align-self: flex-end; /* Align to the right */
+      text-align: right;
+
+      .message-text {
+        background-color: #d1f4d1; /* Light green */
+      }
+    }
+
+    .chat-message.received {
+      align-self: flex-start; /* Align to the left */
+      text-align: left;
+
+      .message-text {
+        background-color: #f1f1f1; /* Light gray */
+      }
+    }
+
+    .message-text {
+      padding: 5px 15px;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .message-time {
+      display: block;
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .chat-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background-color: #f9f9f9;
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
         border-radius: 8px;
-  
-        .message-text {
-          font-size: 16px;
-          color: #333;
-        }
-  
-        .message-meta {
-          font-size: 12px;
-          color: #999;
-          margin-top: 5px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      .send-btn {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #45a049;
         }
       }
     }
   }
-  
+}

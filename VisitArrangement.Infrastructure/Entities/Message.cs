@@ -6,13 +6,11 @@ public class Message : BaseEntity
     {
     }
 
-    public Message(int sentFromFK, int sentToFK, string text, User sentFrom, User sentTo)
+    public Message(int sentFromFK, int sentToFK, string text)
     {
         SentFromFK = sentFromFK;
         SentToFK = sentToFK;
         Text = text;
-        SentFrom = sentFrom;
-        SentTo = sentTo;
     }
 
     public int SentFromFK { get; set; }

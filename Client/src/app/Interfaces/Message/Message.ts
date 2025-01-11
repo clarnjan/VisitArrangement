@@ -12,3 +12,11 @@ export class MessageDetails {
     isSentByCurrentUser!: boolean;
     sentOn!: Date;
 }
+
+export class UserMessages {
+    userId!: number;
+    firstName!: string;
+    lastName!: string;
+    profilePicture!: string;
+    messages!: MessageDetails[];
+}
