@@ -16,9 +16,10 @@ public class ProfileService : IProfileService
         _context = context;
     }
 
-    public async Task<List<UserProfileDto>> GetUserProfilesAsync()
+    public async Task<List<UserProfileDto>> GetUserProfilesAsync(int userId)
     {
         List<UserProfileDto> users = await _context.Users
+            .Where(x => x.Id != userId)
             .Select(x=> new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, new List<LocationDto>()))
             .ToListAsync();
 

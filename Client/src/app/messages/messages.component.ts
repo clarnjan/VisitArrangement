@@ -3,6 +3,7 @@ import { MessagesApiService } from './../shared/services/messages-api.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageInfo } from '../Interfaces/Message/Message';
+import { ArrangementApiService } from '../shared/services/arrangement-api.service';
 
 @Component({
   selector: 'app-messages',
@@ -19,6 +20,7 @@ export class MessagesComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private messagesApiService: MessagesApiService,
+    private arrangementApiService: ArrangementApiService,
     private router: Router
   ) {  }
 
@@ -76,5 +78,12 @@ export class MessagesComponent implements OnInit {
         this.userMessages?.messages.push(result);
         this.messageInfos.find(x => x.userId === this.otherUserId)!.messageText = result.messageText;
       })
+  }
+
+  public arrangeVisit() {
+    this.arrangementApiService.arrangeVisit(this.userId!, this.otherUserId!)
+      .subscribe(() => {
+        this.userMessages!.visitAgreedByCurrentUser = true;
+      });
   }
 }

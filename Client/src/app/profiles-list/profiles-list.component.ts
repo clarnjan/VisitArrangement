@@ -10,19 +10,29 @@ import { Router } from '@angular/router';
 })
 export class ProfilesListComponent implements OnInit {
   public users: UserProfile[] = [];
+  public userId = 0;
 
   constructor(
     private profilesApiService: ProfilesApiService,
     private router: Router) {}
 
   ngOnInit(): void {
-    this.profilesApiService.getUserProfiles()
+    if (typeof window === 'undefined'){
+      return;
+    }
+    const tokenInfo = localStorage.getItem('current-user');
+    if (tokenInfo) {
+      this.userId = JSON.parse(tokenInfo).userId;
+    }
+    this.profilesApiService.getUserProfiles(this.userId)
       .subscribe((result) => {
         this.users = result;
       });
   }
   
   openProfile(userId: number) {
-    this.router.navigate(['profiles', userId]);
+    if (this.userId > 0) {
+      this.router.navigate(['profiles', userId]);
+    }
   }
 }

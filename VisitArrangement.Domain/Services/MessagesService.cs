@@ -42,19 +42,27 @@ public class MessagesService : IMessagesService
         return latestMessagesWithUserInfo;
     }
 
-    public async Task<UserMessagesDto> GetMessageDetailsAsync(int userId, int otherUser)
+    public async Task<UserMessagesDto> GetMessageDetailsAsync(int userId, int otherUserId)
     {
         UserMessagesDto userMessages = await _context.Users
-            .Where(x => x.Id == otherUser)
-            .Select(x => new UserMessagesDto(x.Id, x.FirstName, x.LastName, x.ProfilePicture, new List<MessageDetailsDto>()))
+            .Where(x => x.Id == otherUserId)
+            .Select(x => new UserMessagesDto(x.Id, x.FirstName, x.LastName, x.ProfilePicture, new List<MessageDetailsDto>(), false, false))
             .FirstAsync();
 
         List<MessageDetailsDto> messages = await _context.Messages
-            .Where(x => (x.SentFromFK == userId && x.SentToFK == otherUser) || (x.SentToFK == userId && x.SentFromFK == otherUser))
+            .Where(x => (x.SentFromFK == userId && x.SentToFK == otherUserId) || (x.SentToFK == userId && x.SentFromFK == otherUserId))
             .Select(x => new MessageDetailsDto(x.Text, x.SentFromFK == userId, x.CreatedOn))
             .ToListAsync();
 
         userMessages.Messages = messages;
+
+        Tuple<bool, bool>? arrangement = await _context.Arrangements
+            .Where(x => (x.HostFK == userId && x.VisitorFK == otherUserId) || (x.VisitorFK == userId && x.HostFK == otherUserId))
+            .Select(x => Tuple.Create(x.HostFK == userId ? x.ApprovedByHost : x.ApprovedByVisitor, x.HostFK == userId ? x.ApprovedByVisitor : x.ApprovedByHost))
+            .FirstOrDefaultAsync();
+
+        userMessages.VisitAgreedByCurrentUser = arrangement != null ? arrangement.Item1 : false;
+        userMessages.VisitAgreedByOtherUser = arrangement != null ? arrangement.Item2 : false;
 
         return userMessages;
     }

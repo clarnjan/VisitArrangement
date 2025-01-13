@@ -15,16 +15,16 @@ public class ProfilesController : ControllerBase
         ProfileService = profileService;
     }
 
-    [HttpGet()]
-    public async Task<List<UserProfileDto>> GetUserProfiles()
+    [HttpGet("{userId:int}")]
+    public async Task<List<UserProfileDto>> GetUserProfiles([FromRoute] int userId)
     {
-        return await ProfileService.GetUserProfilesAsync();
+        return await ProfileService.GetUserProfilesAsync(userId);
     }
 
-    [HttpGet("{userId:int}")]
-    public async Task<UserProfileDto> GetUserProfile([FromRoute]int userId)
+    [HttpGet("{userId:int}/details/{otherUserId}")]
+    public async Task<UserProfileDto> GetUserProfile([FromRoute] int userId, [FromRoute]int otherUserId)
     {
-        return await ProfileService.GetUserProfileAsync(userId);
+        return await ProfileService.GetUserProfileAsync(otherUserId);
     }
 
     [HttpPut("{userId:int}")]

@@ -14,9 +14,18 @@
   <div class="messages-chat">
     <div *ngIf="userMessages" class="messages-chat-wrapper">
       <div class="chat-header">
-        <img [src]="userMessages.profilePicture" alt="User Profile Picture" class="profile-image" />
-        <div class="user-info">
-          <p class="profile-name">{{ userMessages.firstName }} {{ userMessages.lastName }}</p>
+        <div class="chat-personal-info">
+          <img [src]="userMessages.profilePicture" alt="User Profile Picture" class="profile-image" />
+          <div class="user-info">
+            <p class="profile-name">{{ userMessages.firstName }} {{ userMessages.lastName }}</p>
+          </div>
+        </div>
+        <button *ngIf="!userMessages.visitAgreedByCurrentUser" (click)="arrangeVisit()">Arrange Visit</button>
+        <div *ngIf="userMessages.visitAgreedByCurrentUser && userMessages.visitAgreedByOtherUser">
+          Visit arranged
+        </div>
+        <div *ngIf="userMessages.visitAgreedByCurrentUser && !userMessages.visitAgreedByOtherUser">
+          Waiting for {{ userMessages.firstName }} {{ userMessages.lastName }} to agree
         </div>
       </div>
       <div class="chat">
@@ -33,7 +42,7 @@
         <!-- Message Input -->
         <div class="chat-input">
           <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." />
-          <button class="send-btn" (click)="sendMessage()">Send</button>
+          <button (click)="sendMessage()">Send</button>
         </div>
       </div>
     </div>

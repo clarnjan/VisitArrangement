@@ -19,4 +19,6 @@ export class UserMessages {
     lastName!: string;
     profilePicture!: string;
     messages!: MessageDetails[];
+    visitAgreedByCurrentUser!: boolean;
+    visitAgreedByOtherUser!: boolean;
 }

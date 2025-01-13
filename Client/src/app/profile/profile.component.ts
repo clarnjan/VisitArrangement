@@ -31,10 +31,11 @@ export class ProfileComponent implements OnInit {
   	this.route.paramMap
   		.subscribe({
   			next: params => {
-  				const userId = Number(params.get('userId'));
-          this.isCurrentUser = JSON.parse(tokenInfo).userId === userId;
+  				const otherUserId = Number(params.get('userId'));
+          const userId = JSON.parse(tokenInfo).userId;
+          this.isCurrentUser =  userId === otherUserId;
           console.log(this.isCurrentUser);
-          this.profilesApiService.getUserProfile(userId)
+          this.profilesApiService.getUserProfile(userId, otherUserId)
             .subscribe((result) => {
               this.user = result;
             });

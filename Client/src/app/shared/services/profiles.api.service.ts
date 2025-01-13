@@ -10,12 +10,12 @@ import { Observable } from "rxjs/internal/Observable";
 export class ProfilesApiService {
 	public constructor(private apiService: ApiService) { }
 
-	public getUserProfiles(): Observable<UserProfile[]> {
-		return this.apiService.get<UserProfile[]>(`profiles`);
+	public getUserProfiles(userId: number): Observable<UserProfile[]> {
+		return this.apiService.get<UserProfile[]>(`profiles/${userId}`);
 	}
 
-	public getUserProfile(userId: number): Observable<UserProfile> {
-		return this.apiService.get<UserProfile>(`profiles/${userId}`);
+	public getUserProfile(userId: number, otherUserId: number): Observable<UserProfile> {
+		return this.apiService.get<UserProfile>(`profiles/${userId}/details/${otherUserId}`);
 	}
 
 	public updateUserProfile(user: UserProfile): Observable<{ }> {
