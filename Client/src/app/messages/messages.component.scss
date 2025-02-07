@@ -11,6 +11,7 @@
     background-color: #f9f9f9;
 
     .message-item {
+      display: flex;
       border-top: 1px solid black;
       padding-top: 5px;
       margin-bottom: 5px;
@@ -24,6 +25,11 @@
       .message-text {
         font-size: 14px;
         color: #333;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        width: 220px;
       }
     }
   }
@@ -56,7 +62,9 @@
 
       .chat-personal-info {
         display: flex;
-        align-items: end;
+        img {
+          cursor: pointer;
+        }
       }
 
       .profile-name {
