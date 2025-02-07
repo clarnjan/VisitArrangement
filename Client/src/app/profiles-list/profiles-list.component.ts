@@ -9,13 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './profiles-list.component.scss'
 })
 export class ProfilesListComponent implements OnInit {
-  public users: UserProfile[] = []; // All users from API
-  public filteredUsers: UserProfile[] = []; // Filtered users for display
+  public users: UserProfile[] = [];
   public userId = 0;
-
-  public searchQuery: string = ''; // Search field value
-  public minRating: number = 0; // Minimum rating filter
-  public ratingOptions: number[] = [1, 2, 3, 4, 5]; // Rating options for dropdown
+  public searchQuery: string = ''; 
+  public minRating: number = 0; 
+  public ratingOptions: number[] = [1, 2, 3, 4, 5]; 
 
   constructor(
     private profilesApiService: ProfilesApiService,
@@ -31,7 +29,6 @@ export class ProfilesListComponent implements OnInit {
       this.userId = JSON.parse(tokenInfo).userId;
     }
 
-    // Fetch profiles with initial filters
     this.fetchProfiles();
   }
 
@@ -39,7 +36,6 @@ export class ProfilesListComponent implements OnInit {
     this.profilesApiService.getUserProfiles(this.userId, this.searchQuery, this.minRating)
       .subscribe((result) => {
         this.users = result;
-        this.filteredUsers = result;
       });
   }
 
