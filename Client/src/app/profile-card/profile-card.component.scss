@@ -1,5 +1,5 @@
 .profile-card {
-    max-width: 600px;
+    width: 600px;
     margin: 20px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -257,24 +257,23 @@ button:disabled {
     padding: 10px;
 }
 
-/* ======= New Styles for Reviews ======= */
 .review {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px;
-    border-bottom: 1px solid #ddd; /* Separator between reviews */
+    border-bottom: 1px solid #ddd; 
 }
 
 .profile-pic {
     width: 40px;
     height: 40px;
-    border-radius: 50%; /* Circular image */
+    border-radius: 50%; 
     object-fit: cover;
 }
 
 .review-content {
-    flex-grow: 1; /* Allows content to expand */
+    flex-grow: 1;
 }
 
 .review-header {

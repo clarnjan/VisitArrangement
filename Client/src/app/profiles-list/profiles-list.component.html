@@ -17,7 +17,7 @@
   
   <div class="profiles-list">
     <app-profile-card 
-      *ngFor="let user of filteredUsers" 
+      *ngFor="let user of users" 
       [user]="user" 
       (click)="openProfile(user.id)">
     </app-profile-card>

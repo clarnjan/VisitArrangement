@@ -1,8 +1,8 @@
 .messages-page {
   display: flex;
-  height: 86vh; /* Full viewport height */
-  margin: 20px; /* Remove default margins */
-  overflow: hidden; /* Prevent overflow issues */
+  height: 86vh; 
+  margin: 20px; 
+  overflow: hidden; 
 
   .messages-sidebar {
     width: 20%;
@@ -75,16 +75,16 @@
     }
 
     .chat-messages {
-      flex: 1; /* Fills available vertical space */
+      flex: 1; 
       display: flex;
       flex-direction: column;
       padding: 10px;
-      overflow-y: auto; /* Enable scrolling */
+      overflow-y: auto; 
       background-color: #ffffff;
     }
 
     .chat-message {
-      max-width: 60%; /* Limit message width */
+      max-width: 60%; 
       border-radius: 8px;
       font-size: 14px;
       position: relative;
@@ -92,20 +92,20 @@
     }
 
     .chat-message.sent {
-      align-self: flex-end; /* Align to the right */
+      align-self: flex-end; 
       text-align: right;
 
       .message-text {
-        background-color: #d1f4d1; /* Light green */
+        background-color: #d1f4d1;
       }
     }
 
     .chat-message.received {
-      align-self: flex-start; /* Align to the left */
+      align-self: flex-start; 
       text-align: left;
 
       .message-text {
-        background-color: #f1f1f1; /* Light gray */
+        background-color: #f1f1f1; 
       }
     }
 

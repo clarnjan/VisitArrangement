@@ -42,7 +42,6 @@
     }
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 600px) {
     .search-filter-container {
         flex-direction: column;
@@ -54,4 +53,11 @@
     .rating-filter {
         width: 100%;
     }
+}
+
+.profiles-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 100%;
 }
