@@ -18,43 +18,29 @@ public class ProfileService : IProfileService
 
     public async Task<List<UserProfileDto>> GetUserProfilesAsync(int userId, string? search, int? minRating)
     {
-        var usersQuery = _context.Users
+        List<User> usersQuery = await _context.Users
             .Include(x => x.Reviews)
+            .Include(x => x.UserLocations)  // Ensure locations are included
+                .ThenInclude(ul => ul.Location)
             .Where(x => x.Id != userId)
-            .Select(x => new
-            {
-                User = x,
-                AverageRating = x.Reviews.Any() ? x.Reviews.Average(r => r.Rating) : 0
-            })
-            .AsQueryable();
+            .ToListAsync();
 
         // Filter by minimum rating
         if (minRating.HasValue && minRating > 0)
         {
-            usersQuery = usersQuery.Where(x => x.AverageRating >= minRating);
+            usersQuery = usersQuery.Where(x => (x.Reviews.Any() ? x.Reviews.Average(r => r.Rating) : 0) >= minRating).ToList();
         }
 
-        // Filter by name or location (case-insensitive)
-        if (!string.IsNullOrEmpty(search))
-        {
-            string searchLower = search.ToLower();
-            usersQuery = usersQuery.Where(x =>
-                x.User.FirstName.ToLower().Contains(searchLower) ||
-                x.User.LastName.ToLower().Contains(searchLower) ||
-                x.User.UserLocations.Any(l => l.Location.Name.ToLower().Contains(searchLower))
-            );
-        }
-
-        var users = await usersQuery
+        List<UserProfileDto> users = usersQuery
             .Select(x => new UserProfileDto(
-                x.User.Id,
-                x.User.FirstName,
-                x.User.LastName,
-                x.User.Email,
-                x.User.ProfilePicture,
-                x.AverageRating,
+                x.Id,
+                x.FirstName,
+                x.LastName,
+                x.Email,
+                x.ProfilePicture,
+                x.Reviews.Any() ? x.Reviews.Average(r => r.Rating) : 0,
                 new List<LocationDto>()))
-            .ToListAsync();
+            .ToList();
 
         var userIds = users.Select(x => x.Id).ToHashSet();
 
@@ -78,8 +64,22 @@ public class ProfileService : IProfileService
             user.Locations = res[user.Id].ToList();
         }
 
+        // Filter by name or location (case-insensitive)
+        if (!string.IsNullOrEmpty(search))
+        {
+            string searchLower = search.ToLower();
+
+            users = users.Where(x =>
+                x.FirstName.ToLower().Contains(searchLower) ||
+                x.LastName.ToLower().Contains(searchLower) ||
+                x.Locations.Any(l => l.Name.ToLower().Contains(searchLower))
+            ).ToList();
+        }
+
         return users;
     }
+
+
 
 
     public async Task<UserProfileDto> GetUserProfileAsync(int userId, int otherUserId)
