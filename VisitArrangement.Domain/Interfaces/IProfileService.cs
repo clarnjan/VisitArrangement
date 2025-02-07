@@ -6,7 +6,7 @@ using VisitArrangement.Infrastructure.Entities;
 
 public interface IProfileService
 {
-    public Task<List<UserProfileDto>> GetUserProfilesAsync(int userId);
+    public Task<List<UserProfileDto>> GetUserProfilesAsync(int userId, string? search, int? minRating);
 
     public Task<UserProfileDto> GetUserProfileAsync(int userId, int otherUserId);
 

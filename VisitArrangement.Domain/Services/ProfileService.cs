@@ -16,24 +16,63 @@ public class ProfileService : IProfileService
         _context = context;
     }
 
-    public async Task<List<UserProfileDto>> GetUserProfilesAsync(int userId)
+    public async Task<List<UserProfileDto>> GetUserProfilesAsync(int userId, string? search, int? minRating)
     {
-        List<UserProfileDto> users = await _context.Users
+        var usersQuery = _context.Users
             .Include(x => x.Reviews)
             .Where(x => x.Id != userId)
-            .Select(x=> new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, x.Reviews.Average(r => r.Rating), new List<LocationDto>()))
+            .Select(x => new
+            {
+                User = x,
+                AverageRating = x.Reviews.Any() ? x.Reviews.Average(r => r.Rating) : 0
+            })
+            .AsQueryable();
+
+        // Filter by minimum rating
+        if (minRating.HasValue && minRating > 0)
+        {
+            usersQuery = usersQuery.Where(x => x.AverageRating >= minRating);
+        }
+
+        // Filter by name or location (case-insensitive)
+        if (!string.IsNullOrEmpty(search))
+        {
+            string searchLower = search.ToLower();
+            usersQuery = usersQuery.Where(x =>
+                x.User.FirstName.ToLower().Contains(searchLower) ||
+                x.User.LastName.ToLower().Contains(searchLower) ||
+                x.User.UserLocations.Any(l => l.Location.Name.ToLower().Contains(searchLower))
+            );
+        }
+
+        var users = await usersQuery
+            .Select(x => new UserProfileDto(
+                x.User.Id,
+                x.User.FirstName,
+                x.User.LastName,
+                x.User.Email,
+                x.User.ProfilePicture,
+                x.AverageRating,
+                new List<LocationDto>()))
             .ToListAsync();
 
         var userIds = users.Select(x => x.Id).ToHashSet();
 
-        Dictionary<int, IEnumerable<LocationDto>> res = (await _context.UserLocations
+        // Get locations for filtered users
+        var res = (await _context.UserLocations
             .Include(x => x.Location)
             .ThenInclude(x => x.Images)
             .Where(x => userIds.Contains(x.UserFK) && x.DeletedOn == null)
             .ToListAsync())
             .GroupBy(x => x.UserFK)
-            .ToDictionary(x => x.Key, v => v.Select(x => new LocationDto(x.LocationFK, x.Location.Name, x.Location.Images.Select(y => y.Path).ToList())));
+            .ToDictionary(
+                x => x.Key,
+                v => v.Select(x => new LocationDto(
+                    x.LocationFK,
+                    x.Location.Name,
+                    x.Location.Images.Select(y => y.Path).ToList())));
 
+        // Assign locations to users
         foreach (UserProfileDto user in users.Where(x => res.ContainsKey(x.Id)))
         {
             user.Locations = res[user.Id].ToList();
@@ -41,6 +80,7 @@ public class ProfileService : IProfileService
 
         return users;
     }
+
 
     public async Task<UserProfileDto> GetUserProfileAsync(int userId, int otherUserId)
     {

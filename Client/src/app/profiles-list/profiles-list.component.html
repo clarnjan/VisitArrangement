@@ -1,3 +1,25 @@
-<app-profile-card *ngFor="let user of users" [user]="user" (click)="openProfile(user.id)">
-
-</app-profile-card>
+<div class="search-filter-container">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      (input)="fetchProfiles()"
+      placeholder="Search by name or location..." 
+      class="search-input"
+    />
+  
+    <select [(ngModel)]="minRating" (change)="fetchProfiles()" class="rating-filter">
+      <option value="0">All Ratings</option>
+      <option *ngFor="let rating of ratingOptions" [value]="rating">
+        {{ rating }}+
+      </option>
+    </select>
+  </div>
+  
+  <div class="profiles-list">
+    <app-profile-card 
+      *ngFor="let user of filteredUsers" 
+      [user]="user" 
+      (click)="openProfile(user.id)">
+    </app-profile-card>
+  </div>
+  
