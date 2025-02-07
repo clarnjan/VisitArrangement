@@ -17,5 +17,7 @@ namespace VisitArrangement.Infrastructure.Entities
         public string ProfilePicture {  get; set; }
 
         public virtual ICollection<UserLocation> UserLocations { get; set; }
+
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

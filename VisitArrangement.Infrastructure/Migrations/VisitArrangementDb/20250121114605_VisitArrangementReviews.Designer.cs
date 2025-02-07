@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VisitArrangement.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using VisitArrangement.Infrastructure.Context;
 namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 {
     [DbContext(typeof(VisitArrangementDbContext))]
-    partial class VisitArrangementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250121114605_VisitArrangementReviews")]
+    partial class VisitArrangementReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,6 +159,7 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("varchar(500)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -352,7 +356,7 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
                         .IsRequired();
 
                     b.HasOne("VisitArrangement.Infrastructure.Entities.User", "ForUser")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ForUserFK")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -399,8 +403,6 @@ namespace VisitArrangement.Infrastructure.Migrations.VisitArrangementDb
 
             modelBuilder.Entity("VisitArrangement.Infrastructure.Entities.User", b =>
                 {
-                    b.Navigation("Reviews");
-
                     b.Navigation("UserLocations");
                 });
 #pragma warning restore 612, 618

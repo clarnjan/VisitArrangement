@@ -1,5 +1,5 @@
 <app-profile-card
-    [user]="user" [canEdit]="isCurrentUser" [canMessage]="!isCurrentUser" [(isEditing)]="isEditing"
+    [user]="user" [canEdit]="isCurrentUser" [canMessage]="!isCurrentUser" [(isEditing)]="isEditing" [isDetails]="true"
     (profilePictureUploaded)="uploadProfilePicture($event)"
-    (saveUpload)="save($event)">
+    (saveUpload)="save($event)" (reviewLeft)="reviewUser($event)">
 </app-profile-card>

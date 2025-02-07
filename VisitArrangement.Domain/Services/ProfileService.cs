@@ -19,8 +19,9 @@ public class ProfileService : IProfileService
     public async Task<List<UserProfileDto>> GetUserProfilesAsync(int userId)
     {
         List<UserProfileDto> users = await _context.Users
+            .Include(x => x.Reviews)
             .Where(x => x.Id != userId)
-            .Select(x=> new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, new List<LocationDto>()))
+            .Select(x=> new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, x.Reviews.Average(r => r.Rating), new List<LocationDto>()))
             .ToListAsync();
 
         var userIds = users.Select(x => x.Id).ToHashSet();
@@ -41,19 +42,35 @@ public class ProfileService : IProfileService
         return users;
     }
 
-    public async Task<UserProfileDto> GetUserProfileAsync([FromRoute] int userId)
+    public async Task<UserProfileDto> GetUserProfileAsync(int userId, int otherUserId)
     {
         UserProfileDto user = await _context.Users
-            .Where(x => x.Id == userId && x.DeletedOn == null)
-            .Select(x => new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, new List<LocationDto>()))
+            .Include(x => x.Reviews)
+            .Where(x => x.Id == otherUserId && x.DeletedOn == null)
+            .Select(x => new UserProfileDto(x.Id, x.FirstName, x.LastName, x.Email, x.ProfilePicture, x.Reviews.Average(r => r.Rating), new List<LocationDto>()))
             .FirstAsync();
 
         user.Locations = await _context.UserLocations
             .Include(x => x.Location)
             .ThenInclude(x => x.Images)
-            .Where(x => x.UserFK == userId && x.DeletedOn == null)
+            .Where(x => x.UserFK == otherUserId && x.DeletedOn == null)
             .Select(x => new LocationDto(x.LocationFK, x.Location.Name, x.Location.Images.Select(y => y.Path).ToList()))
             .ToListAsync();
+
+        Tuple<bool, bool>? arrangement = await _context.Arrangements
+            .Include(x => x.Reviews)
+            .Where(x => (x.HostFK == userId && x.VisitorFK == otherUserId) || (x.VisitorFK == userId && x.HostFK == otherUserId))
+            .Select(x => Tuple.Create(x.ApprovedByHost && x.ApprovedByVisitor, x.Reviews.Any(r => r.ByUserFK == userId)))
+            .FirstOrDefaultAsync();
+
+        user.Reviews = await _context.Reviews
+            .Include(x => x.ByUser)
+            .Where(x => x.ForUserFK == otherUserId)
+            .Select(x => new ReviewDto(x.ByUser.FirstName, x.ByUser.LastName, x.ByUser.ProfilePicture, x.Rating, x.Comment))
+            .ToListAsync();
+
+        user.VisitArranged = arrangement?.Item1 ?? false;
+        user.Rated = arrangement?.Item2 ?? false;
 
         return user;
     }

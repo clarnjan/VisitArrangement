@@ -1,3 +1,4 @@
+import { ReviewRequest } from './../Interfaces/User/UserProfile';
 import { ProfilesApiService } from './../shared/services/profiles.api.service';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UserProfile } from '../Interfaces/User/UserProfile';
@@ -15,10 +16,14 @@ export class ProfileCardComponent implements OnChanges {
   @Input() public canEdit = false;
   @Input() public canMessage = false;
   @Input() public isEditing = false;
+  @Input() public isDetails = false;
   public formGroup: FormGroup | undefined;
+  public reviewRequest: ReviewRequest = { rating: 0, comment: ''};
+  public averageRating = 0;
   @Output() public profilePictureUploaded = new EventEmitter();
   @Output() public saveUpload = new EventEmitter();
   @Output() public isEditingChange = new EventEmitter<boolean>();
+  @Output() public reviewLeft = new EventEmitter<ReviewRequest>();
 
   constructor(
     private fileService: FileService,
@@ -30,6 +35,9 @@ export class ProfileCardComponent implements OnChanges {
       lastName: new FormControl(this.user !== undefined ? this.user!.lastName : '', [Validators.required]),
       locationName: new FormControl('')
     });
+    if (this.user?.rating !== undefined) {
+      this.averageRating = this.user.rating;
+    }
   } 
   
   public triggerFileInputClick(fileInput: HTMLInputElement) {
@@ -85,5 +93,13 @@ export class ProfileCardComponent implements OnChanges {
           .subscribe();
       });
     }
+  }
+
+  public rate(stars: number) {
+    this.reviewRequest.rating = stars;
+  }
+
+  public review() {
+    this.reviewLeft.emit(this.reviewRequest);
   }
 }

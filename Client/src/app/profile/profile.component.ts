@@ -1,5 +1,6 @@
+import { ArrangementApiService } from './../shared/services/arrangement-api.service';
 import { Component, OnInit } from '@angular/core';
-import { UserProfile } from '../Interfaces/User/UserProfile';
+import { ReviewRequest, UserProfile } from '../Interfaces/User/UserProfile';
 import { ProfilesApiService } from '../shared/services/profiles.api.service';
 import { FileService } from '../shared/services/file.service';
 import { HttpEventType } from '@angular/common/http';
@@ -14,10 +15,13 @@ export class ProfileComponent implements OnInit {
   public user: UserProfile | undefined;
   public isCurrentUser = false;
   public isEditing = false;
+  public userId?: number;
+  public otherUserId?: number;
 
   constructor(
     private fileService: FileService,
     private profilesApiService: ProfilesApiService,
+    private arrangementApiService: ArrangementApiService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -31,11 +35,11 @@ export class ProfileComponent implements OnInit {
   	this.route.paramMap
   		.subscribe({
   			next: params => {
-  				const otherUserId = Number(params.get('userId'));
-          const userId = JSON.parse(tokenInfo).userId;
-          this.isCurrentUser =  userId === otherUserId;
+  				this.otherUserId = Number(params.get('userId'));
+          this.userId = JSON.parse(tokenInfo).userId;
+          this.isCurrentUser =  this.userId === this.otherUserId;
           console.log(this.isCurrentUser);
-          this.profilesApiService.getUserProfile(userId, otherUserId)
+          this.profilesApiService.getUserProfile(this.userId!, this.otherUserId)
             .subscribe((result) => {
               this.user = result;
             });
@@ -66,6 +70,16 @@ export class ProfileComponent implements OnInit {
       this.profilesApiService.updateUserProfile(this.user!)
         .subscribe(() => {
           this.isEditing = false;
+        });
+    }
+
+    public reviewUser(reviewRequest: ReviewRequest) {
+      this.arrangementApiService.reviewUser(this.userId!, this.otherUserId!, reviewRequest)
+        .subscribe(() => {
+          this.profilesApiService.getUserProfile(this.userId!, this.otherUserId!)
+            .subscribe((result) => {
+              this.user = result;
+            });
         });
     }
 }

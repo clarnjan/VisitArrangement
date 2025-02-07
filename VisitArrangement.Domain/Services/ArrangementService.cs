@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using VisitArrangement.Domain.Interfaces;
+using VisitArrangement.Domain.Model.DTO;
 using VisitArrangement.Infrastructure.Context;
 using VisitArrangement.Infrastructure.Entities;
 
@@ -48,5 +49,20 @@ public class ArrangementService : IArrangementService
 
         return arrangement;
 
+    }
+
+    public async Task<Review> ReviewUserAsync(int userId, int otherUserId, ReviewRequest reviewRequest)
+    {
+        Arrangement? arrangement = await _context.Arrangements
+            .FirstOrDefaultAsync(x => (x.HostFK == userId && x.VisitorFK == otherUserId) || (x.HostFK == otherUserId && x.VisitorFK == userId));
+        if (arrangement == null)
+        {
+            throw new Exception("Arrangement not found");
+        }
+        Review review = new Review(userId, otherUserId, arrangement.Id, reviewRequest.Rating, reviewRequest.Comment);
+
+        _context.Reviews.Add(review);
+        await _context.SaveChangesAsync();
+        return review;
     }
 }

@@ -1,5 +1,5 @@
 .profile-card {
-    max-width: 500px;
+    max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -13,7 +13,8 @@
 .profile-card-view {
     display: flex;
     .profile-info {        
-        width: 25%;
+        width: 30%;
+        border-right: 1px solid lightgray;
     }
 }
 
@@ -36,7 +37,7 @@
     line-height: 1.6;
 }
 
-.profile-name {
+.text {
     font-size: 18px;
     font-weight: bold;
     color: #333;
@@ -48,7 +49,7 @@
     margin-bottom: 20px;
 }
 
-.edit-button {
+button {
     margin-top: 20px;
     padding: 10px 25px;
     background-color: #28a745;
@@ -61,7 +62,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.edit-button:hover {
+button:hover {
     background-color: #28a745;
     transform: scale(1.05);
 }
@@ -208,10 +209,86 @@ button:disabled {
     opacity: 0.6;
 }
   
-.locations {
-    width: 75%;
-    padding: 20px;
+.right-column {
+    width: 70%;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     h4 {
         margin: 15%;
     }
+    .locations {
+        margin-bottom: 10%;
+    }
+}
+
+.star-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star {
+    font-size: 24px;
+    cursor: default;
+    color: lightgray;
+}
+
+.star.filled {
+    color: gold;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.average-rating {
+    margin-left: 5px;
+}
+
+.review-button {
+    margin-left: 10px;
+}
+
+.comment {
+    border-radius: 10px;
+    height: 40px;
+    padding: 10px;
+}
+
+/* ======= New Styles for Reviews ======= */
+.review {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Separator between reviews */
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Circular image */
+    object-fit: cover;
+}
+
+.review-content {
+    flex-grow: 1; /* Allows content to expand */
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-name {
+    font-weight: bold;
+}
+
+.review-comment {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #555;
 }

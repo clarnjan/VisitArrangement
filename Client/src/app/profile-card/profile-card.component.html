@@ -3,21 +3,67 @@
         <div>
             <img [src]="user.profilePicture" alt="User Profile Picture" class="profile-image">
         </div>
-        <p class="profile-name"><span id="first-name">{{user.firstName}}</span></p>
-        <p class="profile-name"><span id="last-name">{{user.lastName}}</span></p>
-        <p class="profile-email"><span id="email">{{user.email}}</span></p>
+        <span class="text"><span id="first-name">{{user.firstName}} {{user.lastName}}</span></span>
+        <div class="star-rating">
+            <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                class="star"
+                [class.filled]="star <= averageRating">
+              ★
+            </span>
+            <span class="average-rating">{{averageRating}}</span>
+          </div>
         <button class="edit-button" *ngIf="canEdit" (click)="edit()">Edit</button>
         <button class="edit-button" *ngIf="canMessage" (click)="message(user.id)">Message</button>
     </div>
-    <div class="locations">
-        <h4 class="no-locations" *ngIf="user.locations.length === 0">
-            No locations
-        </h4>
-        <app-location 
-            *ngFor="let location of user.locations" 
-            [locationName]="location.name" 
-            [locationImages]="location.images">
-        </app-location>
+    <div class="right-column">
+        <div class="locations">
+            <h4 class="no-locations" *ngIf="user.locations.length === 0">
+                No locations
+            </h4>
+            <app-location 
+                *ngFor="let location of user.locations" 
+                [locationName]="location.name" 
+                [locationImages]="location.images">
+            </app-location>
+        </div>
+        
+        <div *ngIf="isDetails">
+            <div *ngIf="user.visitArranged && !user.rated">
+                <span class="text">Review user:</span>
+                <div class="star-rating">
+                    <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                        class="star clickable"
+                        [class.filled]="star <= reviewRequest.rating"
+                        (click)="rate(star)">
+                        ★
+                    </span>
+                </div>
+                <input class="comment" placeholder="Comment" [(ngModel)]="reviewRequest.comment">
+                <button class="review-button" (click)="review()">Review</button>
+            </div>
+            <div *ngFor="let review of user.reviews" class="review">
+                <!-- Profile Picture -->
+                <img [src]="review.profilePicture" alt="Profile Picture" class="profile-pic">
+              
+                <!-- Review Content -->
+                <div class="review-content">
+                  <!-- Name -->
+                  <div class="review-header">
+                    <span class="review-name">{{ review.firstName }} {{ review.lastName }}</span>
+                    <!-- Star Rating -->
+                    <span class="stars">
+                      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                        <span class="star" [class.filled]="star <= review.rating">★</span>
+                      </ng-container>
+                    </span>
+                  </div>
+              
+                  <!-- Comment -->
+                  <p class="review-comment" *ngIf="review.comment">{{ review.comment }}</p>
+                  <p class="review-comment" *ngIf="!review.comment">No comment</p>
+                </div>
+            </div>              
+        </div>
     </div>
 </div>
 

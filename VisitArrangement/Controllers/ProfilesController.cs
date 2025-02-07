@@ -24,7 +24,7 @@ public class ProfilesController : ControllerBase
     [HttpGet("{userId:int}/details/{otherUserId}")]
     public async Task<UserProfileDto> GetUserProfile([FromRoute] int userId, [FromRoute]int otherUserId)
     {
-        return await ProfileService.GetUserProfileAsync(otherUserId);
+        return await ProfileService.GetUserProfileAsync(userId, otherUserId);
     }
 
     [HttpPut("{userId:int}")]

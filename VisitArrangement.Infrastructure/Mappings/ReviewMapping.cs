@@ -10,14 +10,14 @@ public class ReviewMapping : IEntityTypeConfiguration<Review>
     {
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Comment)
-            .IsRequired()
+            .IsRequired(false)
             .HasColumnType("varchar(500)");
         builder.Property(c => c.Rating)
             .IsRequired()
             .HasColumnType("tinyInt");
 
         builder.HasOne(c => c.ForUser)
-            .WithMany()
+            .WithMany(u => u.Reviews)
             .HasForeignKey(b => b.ForUserFK)
             .OnDelete(DeleteBehavior.NoAction);
 
@@ -27,7 +27,7 @@ public class ReviewMapping : IEntityTypeConfiguration<Review>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne(c => c.Arrangement)
-            .WithMany()
+            .WithMany(a => a.Reviews)
             .HasForeignKey(b => b.ArrangementFK)
             .OnDelete(DeleteBehavior.NoAction);
 

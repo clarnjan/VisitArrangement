@@ -14,4 +14,6 @@ public class Arrangement : BaseEntity
 
     public bool ApprovedByHost { get; set; }
 
+    public virtual ICollection<Review> Reviews { get; set; } 
+
 }

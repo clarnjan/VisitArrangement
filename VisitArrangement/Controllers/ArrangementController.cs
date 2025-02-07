@@ -22,4 +22,10 @@ public class ArrangementController : ControllerBase
     {
         return await ArrangementService.ArrangeVisitAsync(userId, otherUserId);
     }
+
+    [HttpPost("{userId:int}/review/{otherUserId}")]
+    public async Task<Review> ArrangeVisitAsync([FromRoute] int userId, [FromRoute] int otherUserId, [FromBody] ReviewRequest reviewRequest)
+    {
+        return await ArrangementService.ReviewUserAsync(userId, otherUserId, reviewRequest);
+    }
 }
