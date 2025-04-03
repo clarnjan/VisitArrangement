@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   private returnUrl: string = '';
 
   loginForm = new FormGroup({
-    username: new FormControl("", [Validators.required]),
+    email: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required])
   });
   errorMessage: string = '';
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     const login = {... loginFormValue };
 
     const userForAuth: UserForAuthenticationDto = {
-      email: login.username,
+      email: login.email,
       password: login.password
     }
 

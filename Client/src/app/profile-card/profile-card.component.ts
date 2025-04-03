@@ -100,6 +100,8 @@ export class ProfileCardComponent implements OnChanges {
   }
 
   public review() {
-    this.reviewLeft.emit(this.reviewRequest);
+    if (this.reviewRequest.rating !== 0) {
+      this.reviewLeft.emit(this.reviewRequest);
+    }
   }
 }

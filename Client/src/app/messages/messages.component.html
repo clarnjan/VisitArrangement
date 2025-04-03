@@ -21,7 +21,7 @@
             <a class="nav-link profile-name" [routerLink]="['/profiles', otherUserId]">{{ userMessages.firstName }} {{ userMessages.lastName }}</a>
           </div>
         </div>
-        <button *ngIf="!userMessages.visitAgreedByCurrentUser" (click)="arrangeVisit()">Arrange Visit</button>
+        <button *ngIf="userMessages.messages.length > 0 && !userMessages.visitAgreedByCurrentUser" (click)="arrangeVisit()">Arrange Visit</button>
         <div *ngIf="userMessages.visitAgreedByCurrentUser && userMessages.visitAgreedByOtherUser">
           Visit arranged
         </div>
@@ -40,11 +40,16 @@
           </div>
         </div>     
     
-        <!-- Message Input -->
-        <div class="chat-input">
-          <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." />
-          <button (click)="sendMessage()">Send</button>
-        </div>
+        <!-- Message Input --><div class="chat-input">
+        <input 
+          type="text" 
+          [(ngModel)]="newMessage" 
+          placeholder="Type a message..." 
+          (keydown.enter)="sendMessage()"
+        />
+        <button (click)="sendMessage()">Send</button>
+      </div>
+
       </div>
     </div>
   </div>
